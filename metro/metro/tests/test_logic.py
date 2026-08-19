@@ -12,16 +12,16 @@ class TestLogic(Test):
         """Подготовка данных для передачи в формы."""
         super().setUpTestData()
         cls.form_data = {
-            'content': 'Пост автора',
+            'content': 'Пост автора достаточной длинны',
         }
         cls.new_form_data = {
-            'title': 'Новый пост',
+            'content': 'Новый пост достаточной длинны',
         }
 
     def test_anonymous_user_cant_create_post(self):
         """Анонимный пользователь не может создать пост."""
         count_before_attempt = Post.objects.count()
-        response = self.client.post(self.ADD_URL, data=self.form_data)
+        response = self.anon_client.post(self.ADD_URL, data=self.form_data)
         count_after_attempt = Post.objects.count()
         self.assertEqual(count_before_attempt, count_after_attempt)
         redirect_url = f'{self.LOGIN_URL}?next={self.ADD_URL}'
@@ -39,7 +39,7 @@ class TestLogic(Test):
 
     def test_author_can_edit_post(self):
         """Автор может редактировать свой пост."""
-        response = self.author_client.post(
+        self.author_client.post(
             self.EDIT_URL, data=self.new_form_data)
         updated_post = Post.objects.get(pk=self.post_author.pk)
         self.assertEqual(self.new_form_data['content'], updated_post.content)
@@ -57,7 +57,7 @@ class TestLogic(Test):
     def test_author_can_delete_post(self):
         """Автор может удалить свой пост."""
         count_before_attempt = Post.objects.count()
-        response = self.author_client.post(self.DELETE_URL)
+        self.author_client.post(self.DELETE_URL)
         count_after_attempt = Post.objects.count()
         self.assertEqual(count_before_attempt - 1, count_after_attempt)
 

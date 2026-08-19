@@ -12,31 +12,37 @@ class CustomUser(AbstractUser):
     """Модель пользователя."""
 
     username = models.CharField(
+        ('Никнейм'),
         validators=[UnicodeUsernameValidator()],
         unique=True,
         max_length=MAX_LENGH_NAME,
     )
     email = models.EmailField(max_length=MAX_LENGH_EMAIL, unique=True)
     avatar = models.ImageField(
+        ('Аватар'),
         upload_to='avatars',
-        null=True,
-        default=None
+        blank=True,
     )
     first_name = models.CharField(
         ('Имя'),
         max_length=MAX_LENGH_NAME,
+        blank=True,
     )
     last_name = models.CharField(
         ('Фамилия'),
         max_length=MAX_LENGH_NAME,
+        blank=True,
     )
     bio = models.CharField(
         ('Биография'),
         null=True,
-        max_length=MAX_LENGH_BIO
+        max_length=MAX_LENGH_BIO,
+        blank=True,
     )
     date_of_birth = models.DateField(
+        ('Дата рождения'),
         null=True,
+        blank=True,
         validators=[MaxValueValidator(
             limit_value=date.today,
             message='Дата рождения не может быть в будущем.')],

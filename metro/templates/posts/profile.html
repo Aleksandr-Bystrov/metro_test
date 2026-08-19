@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}
+  Страница пользователя {{ profile.username }}
+{% endblock %}
+{% block content %}
+  <h1 class="mb-5 text-center ">Страница пользователя {{ profile.username }}</h1>
+  <small>
+    <ul class="list-group list-group-horizontal justify-content-center mb-3">
+      <li class="list-group-item text-muted">Имя пользователя: {% if profile.first_name %}{{ profile.first_name }}{% else %}не указано{% endif %}</li>
+      <li class="list-group-item text-muted">Фамилия пользователя: {% if profile.last_name %}{{ profile.last_name }}{% else %}не указано{% endif %}</li>
+      <li class="list-group-item text-muted">Регистрация: {{ profile.date_joined }}</li>
+      <li class="list-group-item text-muted">Роль: {% if profile.is_staff %}Админ{% else %}Пользователь{% endif %}</li>
+    </ul>
+    <ul class="list-group text-center mb-3">
+      <li class="list-group-item text-muted">Биография:</li>
+      <li class="list-group-item text-muted">{% if profile.bio %}{{ profile.bio }}{% else %} Отсутствует {% endif %}</li>
+    </ul>
+        <ul class="list-group text-center mb-3">
+      <li class="list-group-item text-muted">Аватар пользователя:</li>
+      <li class="list-group-item text-muted">{% if profile.avatar %}<a href="{{ profile.avatar.url }}" target="_blank">
+            <img class="border-3 rounded img-fluid img-thumbnail  mb-1 mx-auto d-block" src="{{ profile.avatar.url }}">
+          </a>{% else %} Отсутствует {% endif %}</li>
+    </ul>
+    <ul class="list-group list-group-horizontal justify-content-center">
+      {% if user.is_authenticated and request.user == profile %}
+        <a class="btn btn-sm text-muted" href="{% url 'users:edit_profile' %}">Редактировать профиль</a>
+        <a class="btn btn-sm text-muted" href="{% url 'password_change' %}">Изменить пароль</a>
+      {% endif %}
+    </ul>
+  </small>
+  <br>
+{% endblock %}

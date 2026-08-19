@@ -8,6 +8,7 @@ from users.views import RegisrationView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('posts.urls')),
+    path('auth/', include('django.contrib.auth.urls')),
     path('users/', include('users.urls')),
     path('auth/registration/', RegisrationView.as_view(), name='registration'),
 ]

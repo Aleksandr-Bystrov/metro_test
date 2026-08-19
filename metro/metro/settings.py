@@ -35,6 +35,7 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'django_bootstrap5',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -112,6 +113,10 @@ AUTH_USER_MODEL = 'users.CustomUser'
 
 LANGUAGE_CODE = 'ru-RU'
 
+LOGIN_URL = 'login'
+
+LOGIN_REDIRECT_URL = 'posts:index'
+
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
@@ -126,9 +131,11 @@ TIME_ZONE = 'Europe/Moscow'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [BASE_DIR]
+STATICFILES_DIRS = [
+    BASE_DIR / 'static_dev',
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -144,5 +151,5 @@ MAX_LENGH_BIO = 500
 MAX_NAME_POST = 30
 MAX_LENGH_POST = 1000
 MIN_LENG_POST = 20
-MAX_SIZE_IMAGE = 5
+MAX_SIZE_IMAGE = 2
 POSTS_ON_THE_PAGE = 10

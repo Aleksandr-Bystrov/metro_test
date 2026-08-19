@@ -1,18 +1,22 @@
 from django import forms
+from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 
+
 from metro.settings import MAX_LENGH_POST, MAX_SIZE_IMAGE, MIN_LENG_POST
-from .models import CustomUser
+
+User = get_user_model()
 
 
 class UserForm(forms.ModelForm):
     """Класс формы редактирования профиля пользователя."""
-    
+
     def clean_bio(self):
         bio = self.cleaned_data.get('bio')
-        if len(bio) < MIN_LENG_POST:
+        if bio and len(bio) < MIN_LENG_POST:
             raise ValidationError('Слишком короткая биография')
-        if len(bio) > MAX_LENGH_POST:
+        if bio and len(bio) > MAX_LENGH_POST:
             raise ValidationError('Слишком длинная биография')
         return bio
 
@@ -25,7 +29,7 @@ class UserForm(forms.ModelForm):
         return avatar
 
     class Meta:
-        model = CustomUser
+        model = User
         fields = (
             'username',
             'first_name',
@@ -41,3 +45,11 @@ class UserForm(forms.ModelForm):
                 attrs={'type': 'date'},
             )
         }
+
+
+class RegisterForm(UserCreationForm):
+    """Форма для регистрации нового пользователя."""
+
+    class Meta:
+        model = User
+        fields = ('username', 'email')

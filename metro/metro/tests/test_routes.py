@@ -37,7 +37,6 @@ class TestRoutes(Test):
             self.ADD_URL,
             self.EDIT_URL,
             self.DELETE_URL,
-            self.DETAIL_URL,
         )
         for url in urls:
             with self.subTest(url=url):

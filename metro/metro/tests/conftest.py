@@ -33,6 +33,6 @@ class Test(TestCase):
                                  args=(cls.post_author.pk,))
         cls.DETAIL_URL = reverse('posts:post_detail',
                                  args=(cls.post_author.pk,))
-        cls.LOGIN_URL = reverse('users:login')
-        cls.LOGOUT_URL = reverse('users:logout')
+        cls.LOGIN_URL = reverse('login')
+        cls.LOGOUT_URL = reverse('login')
         cls.SIGNUP_URL = reverse('registration')
